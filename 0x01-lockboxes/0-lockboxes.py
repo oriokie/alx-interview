@@ -5,6 +5,9 @@ The lock boxes puzzle
 
 
 def canUnlockAll(boxes):
+    """
+    Checking if all boxes can be opened
+    """
     n = len(boxes)
     opened = set()
     queue = [0]
