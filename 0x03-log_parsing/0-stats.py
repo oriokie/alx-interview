@@ -51,10 +51,10 @@ def main():
                 total_size += file_size
                 if status_code in status_codes:
                     status_codes[status_code] += 1
+                if line_count == 9:
+                    print_stats(total_size, status_codes)
             line_count += 1
 
-            if line_count % 10 == 0:
-                print_stats(total_size, status_codes)
     except KeyboardInterrupt:
         print_stats(total_size, status_codes)
         raise
