@@ -1,63 +1,43 @@
 #!/usr/bin/python3
-"""
-a script that reads stdin line by line and computes metrics:
-"""
+"""Log Parsing"""
 import sys
 
 
-def print_stats(total_size, status_codes):
-    """
-    Function that prints the computed statistics
+if __name__ == '__main__':
+    file_size = [0]
+    status_codes = {200: 0, 301: 0, 400: 0, 401: 0,
+                    403: 0, 404: 0, 405: 0, 500: 0}
 
-    Args:
-    total_size (int): the total file size
-    status_codes (dict) with status code counts.
-    """
-    print(f"File size: {total_size}")
-    for code in sorted(status_codes):
-        if status_codes[code] > 0:
-            print(f"{code}: {status_codes[code]}")
+    def print_stats():
+        """Print log"""
+        print('File size: {}'.format(file_size[0]))
+        for key in sorted(status_codes.keys()):
+            if status_codes[key]:
+                print('{}: {}'.format(key, status_codes[key]))
 
+    def parse_line(line):
+        """Checks for matches"""
+        try:
+            line = line[:-1]
+            word = line.split(' ')
+            # File size is last parameter on stdout
+            file_size[0] += int(word[-1])
+            # Status code comes before file size
+            status_code = int(word[-2])
+            # Move through dictionary of status codes
+            if status_code in status_codes:
+                status_codes[status_code] += 1
+        except ValueError:
+            pass
 
-def parse_line(line):
-    """
-    parses a line to extract status code and file size"
-    """
-    try:
-        parts = line.split()
-        status_code = int(parts[-2])
-        file_size = int(parts[-1])
-        return status_code, file_size
-    except (IndexError, ValueError):
-        return None
-
-
-def main():
-    """
-    the main function for executing the functions
-    """
-    total_size = 0
-    line_count = 0
-    status_codes = {
-        200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+    line_num = 1
     try:
         for line in sys.stdin:
-            parsed = parse_line(line)
-            if parsed:
-                status_code, file_size = parsed
-                total_size += file_size
-                if status_code in status_codes:
-                    status_codes[status_code] += 1
-                if line_count == 9:
-                    print_stats(total_size, status_codes)
-            line_count += 1
-
+            parse_line(line)
+            if line_num % 10 == 0:
+                print_stats()
+            line_num += 1
     except KeyboardInterrupt:
-        print_stats(total_size, status_codes)
+        print_stats()
         raise
-
-    print_stats(total_size, status_code)
-
-
-if __name__ == '__main__':
-    main()
+    print_stats()
