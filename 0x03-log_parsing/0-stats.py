@@ -3,10 +3,9 @@
 a script that reads stdin line by line and computes metrics:
 """
 import sys
-from typing import Dict, Optional, Tuple
 
 
-def print_stats(total_size: int, status_codes: Dict[int, int]) -> None:
+def print_stats(total_size, status_codes):
     """
     Function that prints the computed statistics
 
@@ -20,7 +19,7 @@ def print_stats(total_size: int, status_codes: Dict[int, int]) -> None:
             print(f"{code}: {status_codes[code]}")
 
 
-def parse_line(line: str) -> Optional[Tuple[int, int]]:
+def parse_line(line):
     """
     parses a line to extract status code and file size"
     """
@@ -36,13 +35,13 @@ def parse_line(line: str) -> Optional[Tuple[int, int]]:
         return None
 
 
-def main() -> None:
+def main():
     """
     the main function for executing the functions
     """
-    total_size: int = 0
-    line_count: int = 0
-    status_codes: Dict[int, int] = {
+    total_size = 0
+    line_count = 0
+    status_codes = {
         200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
     try:
         for line in sys.stdin:
