@@ -25,9 +25,11 @@ def parse_line(line: str) -> Optional[Tuple[int, int]]:
     parses a line to extract status code and file size"
     """
     try:
-        parts = line.split()
-        status_code = int(parts[-2])
-        file_size = int(parts[-1])
+        ip, _, _, datetime, request, status_code, file_size = line.split(' ', 6)
+        if request != '"GET /projects/260 HTTP/1.1"':
+            return None
+        status_code = int(status_code)
+        file_size = int(file_size)
         return status_code, file_size
     except (IndexError, ValueError):
         return None
