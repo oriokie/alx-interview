@@ -25,9 +25,6 @@ def parse_line(line):
     """
     try:
         parts = line.split()
-
-        if len(parts) < 7:
-            return None
         status_code = int(parts[-2])
         file_size = int(parts[-1])
         return status_code, file_size
