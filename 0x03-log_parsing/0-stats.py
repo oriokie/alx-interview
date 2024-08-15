@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Log Parsing"""
+"""
+a script that reads stdin line by line and computes metrics:
+"""
 import sys
 
 
@@ -9,14 +11,14 @@ if __name__ == '__main__':
                     403: 0, 404: 0, 405: 0, 500: 0}
 
     def print_stats():
-        """Print log"""
+        """Method for printing the stats"""
         print('File size: {}'.format(file_size[0]))
         for key in sorted(status_codes.keys()):
             if status_codes[key]:
                 print('{}: {}'.format(key, status_codes[key]))
 
     def parse_line(line):
-        """Checks for matches"""
+        """Method for checking for the matches"""
         try:
             line = line[:-1]
             word = line.split(' ')
