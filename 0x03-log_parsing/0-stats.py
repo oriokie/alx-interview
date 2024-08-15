@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Module for logging
+a script that reads stdin line by line and computes metrics:
+
 """
 import sys
 from typing import Dict, Optional, Tuple
@@ -35,7 +36,7 @@ def parse_line(line: str) -> Optional[Tuple[int, int]]:
 
 def main() -> None:
     """
-    the main function
+    the main function for executing the functions
     """
     total_size: int = 0
     line_count: int = 0
@@ -58,6 +59,7 @@ def main() -> None:
         raise
 
     print_stats(total_size, status_code)
+    `
 
 
 if __name__ == '__main__':
