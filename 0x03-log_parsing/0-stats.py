@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """
 a script that reads stdin line by line and computes metrics:
-
 """
 import sys
 from typing import Dict, Optional, Tuple
@@ -59,7 +58,6 @@ def main() -> None:
         raise
 
     print_stats(total_size, status_code)
-    `
 
 
 if __name__ == '__main__':
