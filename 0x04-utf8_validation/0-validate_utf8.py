@@ -7,10 +7,20 @@ UTF-8 validation module
 def validUTF8(data):
     """
     Determines if the given data is valid UTF-8 encoded text.
+    UTF-8 encoding uses specific patterns:
+    1. 1-byte character: The first bit is 0 (e.g., 0xxxxxxx).
+    2. Continuation byte: The first two bits are 10 (e.g., 10xxxxxx).
+    3. n-byte character: The first n bits are 1 followed by a 0
+       (e.g., 1110xxxx).
     """
     def is_continuation(byte):
         """
         Returns True if the given byte is a continuation byte, False otherwise
+
+        A continuation byte in UTF-8 starts with the binary pattern 10xxxxxx,
+        which means the two most significant bits must be 10.
+
+        Bitwise AND (&): The result is 1 if both bits are 1, and 0 otherwise
         """
         return (byte & 0b11000000) == 0b10000000
 
@@ -38,6 +48,6 @@ def validUTF8(data):
                 return False
             i += 4
         else:
-            return False  # Invalid start byte
+            return False  # Invalid UTF-8 character
 
     return True  # All characters are valid
