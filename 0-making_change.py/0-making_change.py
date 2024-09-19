@@ -18,10 +18,10 @@ def makeChange(coins, total):
     # If total is 0 or less, return 0
     if total <= 0:
         return (0)
-    
+
     # sort the coins in a descending order
     coins.sort(reverse=True)
-    #initialize the number of coins variable
+    # initialize the number of coins variable
     num_coins = 0
     for coin in coins:
         if total <= 0:
